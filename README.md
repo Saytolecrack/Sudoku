@@ -13,6 +13,10 @@ Before running the Sudoku game, you need to have Python and the Pygame library i
 ```bash
 pip install pygame
 ```
+```bash
+pip install py-sudoku
+```
+
 
 ## How to Use
 
