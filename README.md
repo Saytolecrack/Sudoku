@@ -63,6 +63,6 @@ pip install py-sudoku
 
 ## Credits
 
-This Sudoku game was created by the author. You can use, modify, and distribute it according to your needs.
+This Sudoku game was created by Sacha Baltide. You can use, modify, and distribute it according to your needs.
 
 Enjoy playing Sudoku!
