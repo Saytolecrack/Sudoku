@@ -74,13 +74,13 @@ class sudokuIhm:
         self.tabCase = [[Case(0, i, j, True) for j in range(9)] for i in range(9)]
         self.caseTpm = None
         if self.difficulty == 1:
-            self.sudoku = Sudoku(3).difficulty(0.3).board
+            self.sudoku = Sudoku(3).difficulty(0.4).board
         elif self.difficulty == 2:
             self.sudoku = Sudoku(3).difficulty(0.5).board
         elif self.difficulty == 3:
             self.sudoku = Sudoku(3).difficulty(0.7).board
         self.button_x = 470
-        self.button_y = 10
+        self.button_y = 30
         self.button_width = 80
         self.button_height = 40
 
@@ -113,7 +113,7 @@ class sudokuIhm:
     def DrawLines(self) :
         for i in range(10):
             if i % 3 == 0:
-                line_thickness = 2
+                line_thickness = 4
             else:
                 line_thickness = 1
             pygame.draw.line(self.screen, (0, 0, 0), (50 * i, 0), (50 * i, 450), line_thickness)
@@ -180,7 +180,13 @@ class sudokuIhm:
                     font = pygame.font.Font(None, 40)
                     text = font.render(str(case.valeur), 1, (0, 0, 0))
                     self.screen.blit(text, (case.colonne * 50 + 20, case.ligne * 50 + 10))
-                    
+       
+    def draw_timer(self, minutes, seconds):
+        pygame.draw.rect(self.screen,(255,255,255),(470,10,80,20))
+        font = pygame.font.Font(None, 16)
+        text = font.render(f"Temps : {minutes:02}:{seconds:02}", True, (0, 0, 0))
+        self.screen.blit(text, (470, 10))
+                 
     def resetValue(self):
         pygame.draw.rect(self.screen, (255, 255, 255), (470,140,130,300))
     
@@ -249,7 +255,7 @@ class sudokuIhm:
                     return False
         return True
     
-    def Vaidate(self):
+    def Validate(self):
         if self.getEmptyCase() is not None:
             self.DrawButton("Sudoku Imcomplet ",self.btnValidate_x + 150 , self.btnValidate_y, self.btnValidate_width+80, self.btnValidate_height, (255, 0, 0))
             return False
@@ -270,10 +276,22 @@ class sudokuIhm:
         self.screen.fill((255, 255, 255))
 
         self.initTableau()
-        self.screen.fill((255, 255, 255))
+        
+        
+        start_time = time.time()
+        
 
         running = True
+        sudokuOk = False
+        
         while running:
+            
+            if not sudokuOk :
+                current_time = int(time.time()- start_time)
+                minutes = current_time // 60
+                seconds = current_time % 60
+            
+            self.draw_timer(minutes,seconds)
             self.DrawCase()
             self.DrawLines()
             
@@ -385,7 +403,9 @@ class sudokuIhm:
                         print("fin")
                         
                     if self.btnValidate_x < mouseX < self.btnValidate_x + self.btnValidate_width and self.btnValidate_y < mouseY < self.btnValidate_y + self.btnValidate_height:
-                        self.Vaidate()
+                        if self.Validate() :
+                            sudokuOk = True
+                        
                     
                     if self.btnNewGame_x < mouseX < self.btnNewGame_x + self.btnNewGame_width and self.btnNewGame_y < mouseY < self.btnNewGame_y + self.btnNewGame_height:
                         if self.currentWindow == 1:
@@ -425,8 +445,11 @@ class AccueilIHM :
         self.btnPlay_h = 50
         self.btnPlay_x = (self.windos_width  - self.btnPlay_w ) //2
         
+        
         self.screen = pygame.display.set_mode((self.windos_width, self.windos_height))
         
+    
+    
         
 
     def drawTitle(self) :
