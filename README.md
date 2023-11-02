@@ -27,7 +27,7 @@ pip install py-sudoku
 3. Run the game by executing the following command:
 
    ```bash
-   python sudoku_game.py
+   python sudokuIHM.py
    ```
 
 4. The game will open in a window.
