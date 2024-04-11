@@ -1,5 +1,3 @@
-Voici un fichier `readme.md` qui explique comment utiliser le code fourni :
-
 # Sudoku Game with Python
 
 ## Description
